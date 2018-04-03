@@ -1,0 +1,59 @@
+# learnOpenGL
+some tests for learing openGL
+
+#include <glad/glad.h> 
+#include <GLFW/glfw3.h>
+#include<iostream>
+using namespace std;
+
+
+void framebuffer_size_callback(GLFWwindow*sindow, int width, int height);
+void processInput(GLFWwindow*window);
+
+//setting
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+
+int main() {
+	glfwInit();//初始化
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+GLFWwindow*window = glfwCreateWindow(SCR_WIDTH,SCR_HEIGHT,  "LearnOpenGL", NULL, NULL);
+	if(window == NULL)
+	{
+		std::cout << "Failed to creat GLFW window"<< std::endl;
+		return -1;
+
+	}
+	glfwMakeContextCurrent(window);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		std::cout << "Fail to initialize GLAD" << std::endl;
+		return - 1;
+	}
+	
+	while (!glfwWindowShouldClose(window)) {
+		processInput(window);
+		glfwSwapBuffers(window);
+		glfwPollEvents();//是否触发事件
+	}
+	
+
+	glfwTerminate();//渲染循环结束后我们需要正确释放/删除之前的分配的所有资源
+	return 0;
+	
+	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	
+
+}
+void processInput(GLFWwindow*window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+
+ }
+
+void framebuffer_size_callback(GLFWwindow*window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
